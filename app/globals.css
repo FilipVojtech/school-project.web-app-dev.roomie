@@ -81,4 +81,14 @@
     .spacer {
         /*TODO*/
     }
+
+    input[type="number"].no-spin-buttons::-webkit-inner-spin-button,
+    input[type="number"].no-spin-buttons::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type="number"].no-spin-buttons {
+        -moz-appearance: textfield !important;
+    }
 }
