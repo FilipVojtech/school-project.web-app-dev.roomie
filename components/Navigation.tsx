@@ -5,7 +5,7 @@ import {
     Calendar,
     CircleUser
 } from 'lucide-react';
-import NavItem from "@/app/(app)/NavItem";
+import NavItem from "@/components/NavItem";
 
 export default function Navigation() {
     // TODO: Remove when authentication implemented
