@@ -1,11 +1,14 @@
 import React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { XSquare, Refrigerator, Sticker, Calendar, CircleUser } from 'lucide-react';
-import { clsx } from "clsx";
-import { usePathname } from "next/navigation";
+import {
+    Refrigerator,
+    Sticker,
+    Calendar,
+    CircleUser
+} from 'lucide-react';
+import NavItem from "@/app/(app)/NavItem";
 
 export default function Navigation() {
+    // TODO: Remove when authentication implemented
     let username = "Test Debuger"
 
     return <nav
@@ -25,36 +28,4 @@ export default function Navigation() {
             <NavItem href="/account" icon={ <CircleUser/> }>{ username }</NavItem>
         </div>
     </nav>
-}
-
-function NavItem(
-    {
-        href,
-        icon = <XSquare/>,
-        display = true,
-        children
-    }: {
-        href: string,
-        icon?: React.JSX.Element | null
-        display?: boolean,
-        children: React.ReactNode
-    }) {
-    const pathName = usePathname();
-
-    if (display) {
-        return <>
-            <Link
-                className={ clsx(
-                    "flex flex-auto basis-1/3 flex-col items-center bg-[#b9f2ba] p-2 rounded-md md:flex-row md:gap-3 md:text-lg md:flex-[0_0_auto] md:p-3",
-                    {
-                        "text-blue-600 font-medium": pathName == href,
-                    }
-                ) }
-                href={ href }
-            >
-                { icon }
-                { children }
-            </Link>
-        </>;
-    } else return null;
 }
