@@ -9,7 +9,7 @@ export default function Navigation() {
     let username = "Test Debuger"
 
     return <nav
-        className="flex align-middle justify-between gap-2 mt-[10px] md:-order-1 md:mr-[10px] md:mt-0 md:flex-col md:gap-2 md:justify-start"
+        className="flex align-middle justify-between gap-2 mt-[5px] md:-order-1 md:mr-[10px] md:mt-0 md:flex-col md:gap-2 md:justify-start"
     >
         <div className="hidden md:contents">
             <NavItem href="/fridge" icon={ null }>
