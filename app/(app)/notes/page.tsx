@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Header from "@/components/Header";
 import React from "react";
-import NoteItem from "@/components/NoteItem";
+import NoteItem from "@/components/notes/NoteItem";
 
 export const metadata: Metadata = {
     title: "Notes",
