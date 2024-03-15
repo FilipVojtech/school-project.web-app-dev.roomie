@@ -8,9 +8,8 @@ export default function NoteItem({ id, title, text }: { id: number, title?: stri
     }
 
     return <Link style={ style } href={ `/notes/${ id }/edit` }>
-        <ListItem>
-            <h3 className="text-2xl border-b-2 border-white border-dashed pb-1">{ title }</h3>
-            <p className="pt-1">{ text }</p>
+        <ListItem title={title}>
+            <p className="border-t-2 border-white border-dashed pt-1">{ text }</p>
         </ListItem>
     </Link>;
 };

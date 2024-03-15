@@ -50,9 +50,8 @@ export default function FridgeItem({ id, name, bestBefore, owners }: {
     }
 
     return <Link href={ `/fridge/${ id }/edit` }>
-        <ListItem className="flex justify-between gap-1 h-min">
+        <ListItem title={ name } className="flex justify-between gap-1 h-min">
             <div className="flex-1 flex-col gap-0.5">
-                <div className="text-2xl">{ name }</div>
                 {
                     bestBefore &&
                     <div className="flex gap-1">
