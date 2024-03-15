@@ -6,6 +6,7 @@ import {
     CircleUser
 } from 'lucide-react';
 import NavItem from "@/components/NavItem";
+import Image from "next/image";
 
 export default function Navigation() {
     // TODO: Remove when authentication implemented
@@ -16,8 +17,7 @@ export default function Navigation() {
     >
         <div className="hidden md:contents">
             <NavItem href="/fridge" icon={ null }>
-                {/*<Image src="Logo.png" alt=""/>*/ }
-                <span className="text-3xl pt-12 pr-14 text-foreground font-semibold">Roomie</span>
+                <Image className="pt-12 pr-10" src="/Logo.png" alt="" width={225} height={0}/>
             </NavItem>
         </div>
         <NavItem href="/fridge" icon={ <Refrigerator/> }>Fridge</NavItem>
