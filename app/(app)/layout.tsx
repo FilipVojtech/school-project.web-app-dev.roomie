@@ -2,8 +2,8 @@ import React from "react";
 import Navigation from "@/components/Navigation";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-    return <div className="flex flex-col h-full md:flex-row">
-        <div id="content" className="flex flex-col h-full w-full rounded-md lg:w-1/2 lg:m-auto">
+    return <div className="flex flex-col min-h-[calc(100dvh-10px)] md:min-h-[calc(100dvh-20px)] md:flex-row">
+        <div id="content" className="flex flex-col grow md:grow-0 w-full rounded-md lg:w-1/2 lg:mx-auto">
             { children }
         </div>
         <Navigation/>

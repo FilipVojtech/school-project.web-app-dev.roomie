@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return <html lang="en">
-    <body className="p-[5px] md:p-[10px] h-dvh">
+    <body className="p-[5px] md:p-[10px] min-h-dvh">
     <ThemeProvider
         attribute="class"
         defaultTheme="light"
