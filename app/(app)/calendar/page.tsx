@@ -2,6 +2,7 @@
 
 import React from "react";
 import DatePicker from "@/components/calendar/DatePicker";
+import CalendarItem from "@/components/calendar/CalendarItem";
 
 export default function CalendarPage() {
     const [ date, setDate ] = React.useState<Date>(new Date());
@@ -13,6 +14,12 @@ export default function CalendarPage() {
     return <>
         <div>
             <DatePicker date={ date } setDate={ setDate }/>
+        </div>
+
+        <div className="flex flex-col grow ">
+            { data[date.toDateString()] && data[date.toDateString()].map(
+                value => <CalendarItem id={ value.id } title={ value.title } key={ value.id }/>
+            ) }
         </div>
     </>;
 };
