@@ -9,7 +9,7 @@ import "@/styles/dayCalendar.css"
 import { CalendarFold, ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function DatePicker({ date, setDate }: { date: Date, setDate: React.Dispatch<SetStateAction<Date>> }) {
-    return <div className="mb-[5px] md:mb-0 md:mr-[10px]">
+    return <div className="mb-[5px] md:mb-0 md:mr-[10px] contents md:block">
         <DayPicker
             mode="single"
             selected={ date }
