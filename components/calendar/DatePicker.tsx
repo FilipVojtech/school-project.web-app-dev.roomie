@@ -9,12 +9,6 @@ import "@/styles/dayCalendar.css"
 import { CalendarFold, ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function DatePicker({ date, setDate }: { date: Date, setDate: React.Dispatch<SetStateAction<Date>> }) {
-
-    let footer = <p>Please pick a day.</p>;
-    if (date) {
-        footer = <p>You picked { format(date, 'PP') }.</p>;
-    }
-
     return <div className="mb-[5px] md:mb-0 md:mr-[10px]">
         <DayPicker
             mode="single"
