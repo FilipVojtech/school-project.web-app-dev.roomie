@@ -15,7 +15,7 @@ export default function DatePicker({ date, setDate }: { date: Date, setDate: Rea
         footer = <p>You picked { format(date, 'PP') }.</p>;
     }
 
-    return <div className="mb-[10px]">
+    return <div className="mb-[5px] md:mb-0 md:mr-[10px]">
         <DayPicker
             mode="single"
             selected={ date }
