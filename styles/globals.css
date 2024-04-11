@@ -92,7 +92,16 @@
         -moz-appearance: textfield !important;
     }
 
-    .interactive {
-        @apply hover:bg-[#b81a5d]/25 hover:transition-colors;
+    .interactive:hover {
+        background-color: rgb(184 26 93/0.25);
+        @apply hover:transition-colors;
+    }
+
+    .destructive {
+        background-color: #F2BAC9 !important;
+    }
+
+    .destructive:hover {
+        background-color: rgb(184 26 93/0.25) !important;
     }
 }
