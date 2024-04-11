@@ -3,17 +3,21 @@ import shajs from 'sha.js';
 
 export default function UserSection() {
     // TODO: Data of the actual user
-    const userEmail: string = "filip.vojtech@outlook.com";
+    const { email, name, initials } = {
+        email: "filip.vojtech@outlook.com",
+        name: "Test Debugger",
+        initials: "FV",
+    };
     const hash = shajs("SHA256")
-        .update(userEmail.trim().toLowerCase())
+        .update(email.trim().toLowerCase())
         .digest("hex");
-    const userName = "Test Debugger"
 
-    return <div className="flex-col items-center bg-red-200">
-        <Avatar>
-            <AvatarImage src={ `https://gravatar.com/avatar/${ hash }?d=404&s=64` } height={ 64 } width={ 64 }/>
-            <AvatarFallback>FV</AvatarFallback>
+    return <div className="flex gap-1.5 flex-col items-center select-none">
+        <Avatar className="w-[100px] h-[100px] mb-2">
+            <AvatarImage src={ `https://gravatar.com/avatar/${ hash }?d=404&s=64` }/>
+            <AvatarFallback><span className="text-3xl">{ initials }</span></AvatarFallback>
         </Avatar>
-        <div className="text-2xl">{ userName }</div>
+        <div className="text-2xl">{ name }</div>
+        <div>{ email }</div>
     </div>;
 }
