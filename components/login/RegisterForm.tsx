@@ -11,8 +11,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
-import { Calendar } from "@/components/ui/calendar";
 import { useRouter } from "next/navigation";
+import CustomDatePicker from "@/components/login/CustomDatePicker";
 
 const formSchema = z
     .object({
@@ -87,7 +87,7 @@ export default function RegisterForm() {
                                         ) }
                                     >
                                         { field.value ? (
-                                            format(field.value, "PPP")
+                                            format(field.value, "P")
                                         ) : (
                                             <span>Pick a date</span>
                                         ) }
@@ -96,15 +96,7 @@ export default function RegisterForm() {
                                 </FormControl>
                             </PopoverTrigger>
                             <PopoverContent className="w-auto p-0" align="center">
-                                <Calendar
-                                    mode="single"
-                                    selected={ field.value }
-                                    onSelect={ field.onChange }
-                                    disabled={ (date) =>
-                                        date > new Date() || date < new Date("1900-01-01")
-                                    }
-                                    initialFocus
-                                />
+                                <CustomDatePicker date={ field.value } setDate={ field.onChange }/>
                             </PopoverContent>
                         </Popover>
                         <FormMessage/>
@@ -151,7 +143,8 @@ export default function RegisterForm() {
                 ) }
             />
             <Button type="submit" className="w-full">Register</Button>
-            <Button type="button" variant="link" onClick={ () => router.push("/login") } className="w-full">Login</Button>
+            <Button type="button" variant="link" onClick={ () => router.push("/login") }
+                    className="w-full">Login</Button>
         </form>
     </Form>
 };
