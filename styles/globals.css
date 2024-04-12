@@ -4,11 +4,11 @@
 
 @layer base {
     :root {
-        /*--default-foreground-color: 0 0% 3.9%;*/
-        /*--custom-foreground-color: 222, 82%, 21%;*/
+        /*--default-foreground: 0 0% 3.9%;*/
+        /*--custom-foreground: 192 24% 88%;*/
 
         --background: 0 0% 100%;
-        --foreground: 222, 82%, 21%;
+        --foreground: 192 24% 88%;
 
         --card: 0 0% 100%;
         --card-foreground: 0 0% 3.9%;
@@ -16,11 +16,17 @@
         --popover: 0 0% 100%;
         --popover-foreground: 0 0% 3.9%;
 
-        --primary: 0 0% 9%;
+        /*--default-primary: 0 0% 9%;*/
+        /*--custom-primary: 190 87% 44%;*/
+
+        --primary: 190 87% 44%;
         --primary-foreground: 0 0% 98%;
 
+        /*--default-secondary-foreground: 0 0% 9%;*/
+        /*--custom-secondary-foreground: 222, 82%, 21%;*/
+
         --secondary: 0 0% 96.1%;
-        --secondary-foreground: 0 0% 9%;
+        --secondary-foreground: 222, 82%, 21%;
 
         --muted: 0 0% 96.1%;
         --muted-foreground: 0 0% 45.1%;
@@ -75,7 +81,7 @@
     }
 
     body {
-        @apply bg-background text-foreground;
+        @apply bg-background text-secondary-foreground;
     }
 
     .spacer {

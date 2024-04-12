@@ -16,7 +16,7 @@ export default function Account() {
         <Header title="Account"/>
         <div className="md:w-1/2 md:mx-auto">
             <UserSection/>
-            <div className="flex flex-col gap-4 bg-[#E2E8F0] p-2.5 mt-10 rounded-lg">
+            <div className="flex flex-col gap-4 bg-foreground p-2.5 mt-10 rounded-lg">
                 <GeneralSection/>
                 <AccountSection/>
                 <HouseholdManagementSection/>
