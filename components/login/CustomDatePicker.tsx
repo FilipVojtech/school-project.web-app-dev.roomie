@@ -9,6 +9,7 @@ export default function CustomDatePicker({ date, setDate }: { date: Date | undef
         captionLayout="dropdown-buttons"
         fromYear={ 1900 }
         toYear={ 2025 }
+        weekStartsOn={1}
         classNames={ {
             caption_label: 'flex items-center text-sm font-medium',
             dropdown: 'rdp-dropdown bg-card',
