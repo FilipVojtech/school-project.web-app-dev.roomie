@@ -14,7 +14,7 @@ export default function UserSection() {
 
     return <div className="flex gap-1.5 flex-col items-center select-none">
         <Avatar className="w-[100px] h-[100px] mb-2">
-            <AvatarImage src={ `https://gravatar.com/avatar/${ hash }?d=404&s=64` }/>
+            <AvatarImage src={ `https://gravatar.com/avatar/${ hash }?d=404&s=100` }/>
             <AvatarFallback><span className="text-3xl">{ initials }</span></AvatarFallback>
         </Avatar>
         <div className="text-2xl">{ name }</div>
