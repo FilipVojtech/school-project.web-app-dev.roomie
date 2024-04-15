@@ -5,6 +5,23 @@ export const authConfig = {
         signIn: '/login',
     },
     callbacks: {
+        jwt({ token, user }) {
+            if (user) { // User is available during sign-in
+                token.id = user.id;
+                token.householdId = user.household_id;
+                token.name = `${ user.first_name } ${ user.last_name }`;
+                token.initials = user.first_name[0] + user.last_name[0];
+                token.email = user.email;
+            }
+            return token;
+        },
+        session({ session, token, user }) {
+            session.user.id = token.id as string;
+            session.user.name = token.name;
+            session.user.initials = token.initials as string;
+            session.user.householdId = token.householdId as string;
+            return session;
+        },
         authorized({ auth, request: { nextUrl } }) {
             const restrictedPages = [ "/fridge", "/notes", "/calendar", "/account" ];
             const isLoggedIn = !!auth?.user;
