@@ -9,19 +9,21 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { authenticate } from "@/app/_actions";
 import { LoginFormSchema } from "@/lib/schema";
 
 export default function LoginForm() {
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const router = useRouter();
+    const form = useForm<z.infer<typeof LoginFormSchema>>({
+        resolver: zodResolver(LoginFormSchema),
         defaultValues: {
             email: "",
+            password: "",
         }
     });
-    const router = useRouter();
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values);
+    async function onSubmit(values: z.infer<typeof LoginFormSchema>) {
+        await authenticate(values);
     }
 
     return <Form { ...form }>
