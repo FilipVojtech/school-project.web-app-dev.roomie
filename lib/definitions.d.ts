@@ -8,3 +8,11 @@ export type User = {
     birt_date: Date;
     role: string;
 }
+
+export type SessionUser = {
+    id: string;
+    householdId: string | null;
+    email: string
+    name: string;
+    initials: string;
+}
