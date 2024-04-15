@@ -6,6 +6,7 @@ import AccountSection from "@/components/account/AccountSection";
 import HouseholdManagementSection from "@/components/account/HouseholdManagementSection";
 import LegalSection from "@/components/account/LegalSection";
 import { Button } from "@/components/ui/button";
+import { signOut } from "@/auth";
 
 export const metadata: Metadata = {
     title: "Account",
@@ -21,8 +22,20 @@ export default function Account() {
                 <AccountSection/>
                 <HouseholdManagementSection/>
                 <LegalSection/>
-                <Button variant="destructive">Log out</Button>
+                <LogoutButton/>
             </div>
         </div>
     </>;
 };
+
+function LogoutButton() {
+    return <form
+        action={ async () => {
+            "use server";
+            await signOut();
+        } }
+        className="w-full"
+    >
+        <Button variant="destructive" className="w-full">Log out</Button>
+    </form>
+}
