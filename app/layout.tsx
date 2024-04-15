@@ -1,7 +1,8 @@
 import { Metadata } from "next";
-import "./globals.css";
+import "@/styles/globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import React from "react";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
     title: {
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return <html lang="en">
-    <body className="p-[5px] md:p-[10px] h-dvh">
+    <body className="p-[5px] md:p-[10px] min-h-dvh">
     <ThemeProvider
         attribute="class"
         defaultTheme="light"
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         disableTransitionOnChange
     >
         { children }
+        <Toaster richColors/>
     </ThemeProvider>
     </body>
     </html>;
