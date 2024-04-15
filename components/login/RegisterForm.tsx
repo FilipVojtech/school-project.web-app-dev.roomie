@@ -13,16 +13,25 @@ import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { useRouter } from "next/navigation";
 import CustomDatePicker from "@/components/login/CustomDatePicker";
+import { register } from "@/app/_actions";
 import { RegisterFormSchema } from "@/lib/schema";
+import { toast } from "sonner";
 
 export default function RegisterForm() {
     const router = useRouter();
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<z.infer<typeof RegisterFormSchema>>({
+        resolver: zodResolver(RegisterFormSchema),
     });
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values);
+    async function onSubmit(
+        data: z.infer<typeof RegisterFormSchema>
+    ) {
+        const response = await register(data);
+        if (response.message) {
+            if (response.success) toast.success(response.message);
+            else toast.error(response.message);
+        }
+        if (response.redirect) router.push(response.redirect);
     }
 
     return <Form { ...form }>
