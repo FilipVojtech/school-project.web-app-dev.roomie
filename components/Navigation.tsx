@@ -17,7 +17,7 @@ export default function Navigation() {
     >
         <div className="hidden md:contents">
             <NavItem href="/fridge" icon={ null }>
-                <Image className="pt-12 pr-10" src="/Logo.png" alt="" width={ 225 } height={ 0 }/>
+                <Image className="pt-12 pr-10" src="/Logo.png" alt="" width={ 225 } height={ 0 } priority/>
             </NavItem>
         </div>
         <NavItem href="/fridge" icon={ <Refrigerator/> }>Fridge</NavItem>
