@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import "@/styles/globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import React from "react";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
     title: {
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         disableTransitionOnChange
     >
         { children }
+        <Toaster richColors/>
     </ThemeProvider>
     </body>
     </html>;
