@@ -9,11 +9,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-
-const formSchema = z.object({
-    email: z.string().email(),
-    password: z.string(),
-})
+import { LoginFormSchema } from "@/lib/schema";
 
 export default function LoginForm() {
     const form = useForm<z.infer<typeof formSchema>>({
