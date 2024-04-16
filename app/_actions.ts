@@ -34,15 +34,16 @@ export async function authenticate(data: z.infer<typeof LoginFormSchema>) {
     password = pepper + password;
 
     try {
-        await signIn('credentials', { email, password, redirectTo: "/" });
+        await signIn('credentials', { email, password, redirect: false });
+        return { success: true, redirect: "/" };
     } catch (error) {
         if (error instanceof AuthError) {
             switch (error.type) {
                 case "CredentialsSignin":
-                    return "Invalid Credentials";
+                    return { success: false, message: "Invalid Credentials" };
                 default: {
                     console.error("Sign in error", error);
-                    return "Something went wrong";
+                    return { success: false, message: "Something went wrong" };
                 }
             }
         } else {
@@ -102,6 +103,6 @@ export async function register(data: z.infer<typeof RegisterFormSchema>) {
     return {
         success: true,
         redirect: '/login',
-        message: "Account created successfully, you can now log in."
+        message: "Account created successfully, you can now log&nbsp;in."
     };
 }

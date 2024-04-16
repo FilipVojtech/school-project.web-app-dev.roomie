@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { authenticate } from "@/app/_actions";
 import { LoginFormSchema } from "@/lib/schema";
+import { toast } from "sonner";
 
 export default function LoginForm() {
     const router = useRouter();
@@ -23,7 +24,13 @@ export default function LoginForm() {
     });
 
     async function onSubmit(values: z.infer<typeof LoginFormSchema>) {
-        await authenticate(values);
+        const result = await authenticate(values);
+
+        if (result.success) {
+            router.replace(result.redirect!);
+        } else {
+            toast.error(result.message);
+        }
     }
 
     return <Form { ...form }>
