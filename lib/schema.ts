@@ -51,3 +51,8 @@ export const RegisterFormSchema = z
             ctx.addIssue(zIssueObj);
         }
     })
+
+export const CreateHouseholdFormSchema = z
+    .object({
+        householdName: z.string().min(1, "Please enter a household name"),
+    })
