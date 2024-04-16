@@ -4,11 +4,18 @@ import UserImage from "@/app/(app)/UserImage";
 import Link from "next/link";
 import { clsx } from "clsx";
 import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
-export default function Header({ title }: { title: string }) {
+export default function Header({ title, disableAccount = false, className }: {
+    title: string,
+    disableAccount?: boolean
+    className?: string | undefined,
+}) {
     const pathName = usePathname();
 
-    return <header className="flex flex-row justify-between items-center mb-[5px] md:mb-[10px] select-none">
+    return <header
+        className={ cn("flex flex-row justify-between items-center mb-[5px] md:mb-[10px] select-none", className) }
+    >
         <span className="text-3xl mb-[5px] md:mb-[10px]">{ title }</span>
         <Link
             href="/account"
@@ -19,7 +26,7 @@ export default function Header({ title }: { title: string }) {
                 }
             ) }
         >
-            <UserImage/>
+            { !disableAccount && <UserImage/> }
         </Link>
     </header>;
 };
