@@ -1,11 +1,15 @@
 "use server";
 
-import { signIn } from "@/auth";
+import { auth, signIn } from "@/auth";
 import { AuthError } from "next-auth";
 import { sql } from "@vercel/postgres";
 import { z } from "zod";
 import { User } from "@/lib/definitions";
-import { LoginFormSchema, RegisterFormSchema } from "@/lib/schema";
+import {
+    CreateHouseholdFormSchema,
+    LoginFormSchema,
+    RegisterFormSchema
+} from "@/lib/schema";
 import bcrypt from "bcryptjs";
 
 const pepper = process.env.PEPPER!;
@@ -105,4 +109,41 @@ export async function register(data: z.infer<typeof RegisterFormSchema>) {
         redirect: '/login',
         message: "Account created successfully, you can now log&nbsp;in."
     };
+}
+
+export async function createHousehold(data: z.infer<typeof CreateHouseholdFormSchema>) {
+    const session = await auth();
+    if (!session?.user) {
+        return { success: false, message: "There was an issue creating the household" };
+    }
+
+    const parseResult = CreateHouseholdFormSchema.safeParse(data);
+
+    if (!parseResult.success) {
+        return { success: false, error: parseResult.error.format() };
+    }
+
+    const { householdName } = parseResult.data;
+
+    try {
+        const createHouseholdResult = await sql`
+            INSERT INTO household(name)
+            VALUES (${ householdName })
+            RETURNING id;
+        `;
+        const newHouseholdId = createHouseholdResult.rows[0].id;
+
+        await sql`
+            UPDATE users
+            SET household_id=${ newHouseholdId }
+            WHERE id = ${ session.user.id };
+        `;
+
+        session.user.householdId = householdName;
+    } catch (error) {
+        console.error("Error creating household.", error);
+        return { success: false, message: "There was an issue creating the household", }
+    }
+
+    return { success: true, redirect: "/fridge", }
 }
