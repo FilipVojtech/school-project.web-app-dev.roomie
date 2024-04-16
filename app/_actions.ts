@@ -147,3 +147,30 @@ export async function createHousehold(data: z.infer<typeof CreateHouseholdFormSc
 
     return { success: true, redirect: "/fridge", }
 }
+
+export async function deleteAccount() {
+    // TODO: Proper account deletion
+    const session = await auth();
+    const failResult = { success: false, message: "There was an issue deleting your account." };
+
+    if (!session?.user) {
+        return failResult;
+    }
+
+    try {
+        await sql`
+            DELETE
+            FROM users
+            WHERE id = ${ session?.user.id };
+        `;
+        console.log("DELETED");
+    } catch (error) {
+        console.error("Failed deleting account", session.user.id, error);
+    }
+
+    return {
+        success: true,
+        message: "Your account was deleted successfully. Thank you for being with us.",
+        redirect: "/",
+    };
+}
