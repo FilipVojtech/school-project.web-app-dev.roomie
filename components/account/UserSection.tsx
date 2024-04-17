@@ -1,13 +1,15 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import shajs from 'sha.js';
+import { auth } from "@/auth";
 
-export default function UserSection() {
-    // TODO: Data of the actual user
-    const { email, name, initials } = {
-        email: "filip.vojtech@outlook.com",
-        name: "Test Debugger",
-        initials: "FV",
-    };
+export default async function UserSection() {
+    const session = await auth();
+    if (!session?.user) {
+        return <>
+            <p>Couldn&apos;t load this section</p>
+        </>
+    }
+    const { email, name, initials } = session.user;
     const hash = shajs("SHA256")
         .update(email.trim().toLowerCase())
         .digest("hex");
