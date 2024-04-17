@@ -56,3 +56,9 @@ export const CreateHouseholdFormSchema = z
     .object({
         householdName: z.string().min(1, "Please enter a household name"),
     })
+
+export const ChangeNameFormSchema = z
+    .object({
+        firstName: z.string().min(1, "Please enter your first name"),
+        lastName: z.string().min(1, "Please enter your last name"),
+    })
