@@ -12,7 +12,9 @@ export type User = {
 export type SessionUser = {
     id: string;
     householdId: string | null;
-    email: string
+    email: string;
+    firstName: string;
+    lastName: string;
     name: string;
     initials: string;
 }

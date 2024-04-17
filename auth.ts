@@ -15,6 +15,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 const { id, email, household_id, first_name, last_name } = user as User;
                 token.id = id;
                 token.householdId = household_id;
+                token.firstName = first_name;
+                token.lastName = last_name;
                 token.name = `${ first_name } ${ last_name }`;
                 token.initials = first_name[0] + last_name[0];
                 token.email = email;
@@ -22,9 +24,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             return token;
         },
         async session({ session, token }) {
-            const { id, email, name, initials, householdId } = token as SessionUser;
+            const {
+                id,
+                email,
+                firstName,
+                lastName,
+                name,
+                initials,
+                householdId
+            } = token as SessionUser;
 
             session.user.id = id;
+            session.user.firstName = firstName;
+            session.user.lastName = lastName;
             session.user.name = name;
             session.user.initials = initials;
             session.user.householdId = householdId;
