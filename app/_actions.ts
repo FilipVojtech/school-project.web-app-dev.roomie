@@ -31,7 +31,7 @@ export async function authenticate(data: z.infer<typeof LoginFormSchema>) {
     const parseResult = LoginFormSchema.safeParse(data);
 
     if (!parseResult.success) {
-        return { success: false, error: parseResult.error.format() };
+        return { success: false, message: "Something went wrong" };
     }
 
     let { email, password } = parseResult.data;
@@ -39,7 +39,6 @@ export async function authenticate(data: z.infer<typeof LoginFormSchema>) {
 
     try {
         await signIn('credentials', { email, password, redirect: false });
-        return { success: true, redirect: "/" };
     } catch (error) {
         if (error instanceof AuthError) {
             switch (error.type) {
@@ -52,9 +51,10 @@ export async function authenticate(data: z.infer<typeof LoginFormSchema>) {
             }
         } else {
             console.error("Non AuthError occurred");
-            throw error;
+            return { success: false, message: "Something went wrong" };
         }
     }
+    return { success: true, redirect: "/" };
 }
 
 export async function register(data: z.infer<typeof RegisterFormSchema>) {
