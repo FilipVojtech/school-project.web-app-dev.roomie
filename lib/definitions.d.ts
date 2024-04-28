@@ -7,7 +7,7 @@ export type User = {
     password: string;
     birt_date: Date;
     role: string;
-}
+};
 
 export type SessionUser = {
     id: string;
@@ -18,4 +18,13 @@ export type SessionUser = {
     name: string;
     initials: string;
     role: string | null;
-}
+};
+
+export type FridgeItem = {
+    id: string;
+    household_id: string,
+    name: string;
+    quantity: number;
+    owners: string[];
+    expiry_date: Date;
+};

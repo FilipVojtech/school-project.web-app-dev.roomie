@@ -80,3 +80,11 @@ export const ChangePasswordFormSchema = z
         passwordRepeat: z.string(),
     })
     .superRefine(passwordSuperRefine);
+
+export const FridgeItemFormSchema = z
+    .object({
+        name: z.string().min(1, "Item name is required."),
+        quantity: z.coerce.number({ required_error: "Enter a number" }).int().min(1, "Enter a whole number."),
+        expiryDate: z.date().optional(),
+        owners: z.array(z.object({ label: z.string(), value: z.string(), disable: z.boolean().optional(), })).min(1),
+    });

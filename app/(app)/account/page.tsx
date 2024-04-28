@@ -22,7 +22,7 @@ export default async function Account() {
 
     return <>
         <Header title="Account"/>
-        <div className="md:w-1/2 md:mx-auto">
+        <main className="md:w-1/2 md:mx-auto">
             <UserSection name={ name } initials={ initials } email={ email }/>
             <div className="flex flex-col gap-4 bg-foreground p-2.5 mt-10 rounded-lg">
                 <GeneralSection/>
@@ -31,7 +31,7 @@ export default async function Account() {
                 <LegalSection/>
                 <LogoutButton/>
             </div>
-        </div>
+        </main>
     </>;
 };
 
