@@ -1,6 +1,6 @@
 "use server";
 
-import { auth, signIn } from "@/auth";
+import { auth, signIn, signOut } from "@/auth";
 import { AuthError } from "next-auth";
 import { sql } from "@vercel/postgres";
 import { z } from "zod";
@@ -166,11 +166,8 @@ export async function deleteAccount() {
         console.log("DELETED");
     } catch (error) {
         console.error("Failed deleting account", session.user.id, error);
+        return failResult;
     }
 
-    return {
-        success: true,
-        message: "Your account was deleted successfully. Thank you for being with us.",
-        redirect: "/",
-    };
+    await signOut();
 }
