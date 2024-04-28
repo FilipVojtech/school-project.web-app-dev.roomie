@@ -26,11 +26,9 @@ export default function LoginForm() {
     async function onSubmit(values: z.infer<typeof LoginFormSchema>) {
         const result = await authenticate(values);
 
-        if (result.success) {
-            router.replace(result.redirect!);
-        } else {
-            toast.error(result.message);
-        }
+        if (!result) return;
+        if (result.success) router.replace(result.redirect!);
+        else toast.error(result.message);
     }
 
     return <Form { ...form }>
