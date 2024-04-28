@@ -12,7 +12,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     callbacks: {
         jwt({ token, user }) {
             if (user) {
-                const { id, email, household_id, first_name, last_name } = user as User;
+                const { id, email, household_id, first_name, last_name, role } = user as User;
+
                 token.id = id;
                 token.householdId = household_id;
                 token.firstName = first_name;
@@ -20,6 +21,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 token.name = `${ first_name } ${ last_name }`;
                 token.initials = first_name[0] + last_name[0];
                 token.email = email;
+                token.role = role;
             }
             return token;
         },
@@ -31,7 +33,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 lastName,
                 name,
                 initials,
-                householdId
+                householdId,
+                role,
             } = token as SessionUser;
 
             session.user.id = id;
@@ -40,11 +43,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             session.user.name = name;
             session.user.initials = initials;
             session.user.householdId = householdId;
+            session.user.role = role;
 
-            const user = await fetchUser(email);
+            const user = await fetchUser(session.user.email ?? email);
 
-            if (user?.household_id) {
+            if (!!user) {
                 session.user.householdId = user.household_id;
+                session.user.email = user.email;
+                session.user.firstName = user.first_name;
+                session.user.lastName = user.last_name;
+                session.user.name = `${ user.first_name } ${ user.last_name }`;
+                session.user.initials = user.first_name[0] + user.last_name[0];
             }
 
             return session;

@@ -17,4 +17,5 @@ export type SessionUser = {
     lastName: string;
     name: string;
     initials: string;
+    role: string | null;
 }
