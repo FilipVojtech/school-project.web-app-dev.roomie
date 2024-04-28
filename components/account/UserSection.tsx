@@ -1,15 +1,9 @@
+"use client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import shajs from 'sha.js';
-import { auth } from "@/auth";
 
-export default async function UserSection() {
-    const session = await auth();
-    if (!session?.user) {
-        return <>
-            <p>Couldn&apos;t load this section</p>
-        </>
-    }
-    const { email, name, initials } = session.user;
+export default function UserSection({email, initials, name}:{email: string, initials: string, name: string}) {
     const hash = shajs("SHA256")
         .update(email.trim().toLowerCase())
         .digest("hex");
