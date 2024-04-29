@@ -16,6 +16,7 @@ export default function DeleteAccountButton() {
     async function onDeleteAccountClick() {
         const result = await deleteAccount();
 
+        if (!result) return;
         if (result.success) {
             toast.success(result.message);
             await signOut();
