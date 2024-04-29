@@ -1,10 +1,11 @@
 import ListItem from "@/components/ListItem";
 import Link from "next/link";
 import type { NoteItem } from "@/lib/definitions";
+import type { CSSProperties } from "react";
 
 export default function NoteItem({ id, title, content }: NoteItem) {
-    const randomRot = Math.floor((Math.random() * 7) - 3.75);
-    const style = {
+    const randomRot = Math.floor(Math.random() - 0.5);
+    const style: CSSProperties = {
         transform: `rotate(${ randomRot }deg)`,
     }
 
