@@ -28,3 +28,12 @@ export type FridgeItem = {
     owners: string[];
     expiry_date: Date;
 };
+
+export type NoteItem = {
+    id: string;
+    author_id: string;
+    created_at: Date;
+    title?: string;
+    content: string;
+    pinned: boolean;
+}

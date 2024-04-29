@@ -6,7 +6,7 @@ import { headers } from "next/headers";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Fridge item not found"
+    title: "Note not found",
 }
 
 export default async function FridgeItemNotFound() {
@@ -16,12 +16,13 @@ export default async function FridgeItemNotFound() {
     const pathSegments = fullUrl.split("/");
 
     return <>
-        <Header title="Fridge item not found"/>
+        <Header title="Note not found"/>
         <main className="flex flex-col gap-4">
             { pathSegments.length > 2 &&
                 <div className="w-full bg-foreground">
-                    <code className="p-5 border-2 rounded-md block w-full">Item
-                        ID: { pathSegments[pathSegments.length - 2] }</code>
+                    <code className="p-5 border-2 rounded-md block w-full">
+                        Note ID: { pathSegments[pathSegments.length - 2] }
+                    </code>
                 </div>
             }
             <div>
@@ -33,7 +34,7 @@ export default async function FridgeItemNotFound() {
             </div>
             <div>
                 <Button asChild>
-                    <Link href="/fridge">Go back to fridge</Link>
+                    <Link href="/notes">Go back to notes</Link>
                 </Button>
             </div>
         </main>

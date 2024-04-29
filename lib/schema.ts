@@ -83,8 +83,14 @@ export const ChangePasswordFormSchema = z
 
 export const FridgeItemFormSchema = z
     .object({
-        name: z.string().min(1, "Item name is required."),
-        quantity: z.coerce.number({ required_error: "Enter a number" }).int().min(1, "Enter a whole number."),
+        name: z.string().min(1, "Item name is required"),
+        quantity: z.coerce.number({ required_error: "Enter a number" }).int().min(1, "Enter a whole number"),
         expiryDate: z.date().optional(),
         owners: z.array(z.object({ label: z.string(), value: z.string(), disable: z.boolean().optional(), })).min(1),
+    });
+
+export const NoteFormSchema = z
+    .object({
+        title: z.string().optional(),
+        content: z.string().min(1, "Content is required").max(2000,"Maximum allowed length is 2000 character."),
     });
