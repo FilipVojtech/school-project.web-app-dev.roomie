@@ -7,12 +7,33 @@ export type User = {
     password: string;
     birt_date: Date;
     role: string;
-}
+};
 
 export type SessionUser = {
     id: string;
     householdId: string | null;
-    email: string
+    email: string;
+    firstName: string;
+    lastName: string;
     name: string;
     initials: string;
+    role: string | null;
+};
+
+export type FridgeItem = {
+    id: string;
+    household_id: string,
+    name: string;
+    quantity: number;
+    owners: string[];
+    expiry_date: Date;
+};
+
+export type NoteItem = {
+    id: string;
+    author_id: string;
+    created_at: Date;
+    title?: string;
+    content: string;
+    pinned: boolean;
 }

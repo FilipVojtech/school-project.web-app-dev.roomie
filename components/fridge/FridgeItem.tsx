@@ -7,13 +7,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 
-export default function FridgeItem({ id, name, bestBefore, owners }: {
+export default function FridgeItem({ id, name, bestBefore, owners, quantity }: {
     id: string;
     name: string;
     bestBefore?: Date;
     owners: { [key: symbol]: any, firstName: string, lastName: string }[];
+    quantity: number;
 }) {
-    const [ quantity, setQuantity ] = useState(1);
+    const [ getQuantity, setGetQuantity ] = useState(quantity);
     let ownersString: string = "You";
 
     /**
@@ -28,12 +29,12 @@ export default function FridgeItem({ id, name, bestBefore, owners }: {
         );
 
         preventEventPropagation(event);
-        setQuantity(newValue);
+        setGetQuantity(newValue);
     }
 
     function handleBlur(value: string) {
         if (value == "") {
-            setQuantity(0);
+            setGetQuantity(0);
         }
     }
 
@@ -72,13 +73,13 @@ export default function FridgeItem({ id, name, bestBefore, owners }: {
                         variant="outline"
                         size="icon"
                         className="border-0 rounded-none"
-                        onClick={ e => handleChange(quantity + 1, e) }
+                        onClick={ e => handleChange(getQuantity + 1, e) }
                     >
                         <Plus size={ 16 }/>
                     </Button>
                     <Input
                         type="number"
-                        value={ quantity }
+                        value={ getQuantity }
                         className="w-14 text-lg text-center border-0 border-x-2 rounded-none no-spin-buttons"
                         onClick={ e => preventEventPropagation(e) }
                         onChange={ e => handleChange(e.target.value, e) }
@@ -88,7 +89,7 @@ export default function FridgeItem({ id, name, bestBefore, owners }: {
                         variant="outline"
                         size="icon"
                         className="border-0 rounded-none"
-                        onClick={ e => handleChange(quantity - 1, e) }
+                        onClick={ e => handleChange(getQuantity - 1, e) }
                     >
                         <Minus size={ 16 }/>
                     </Button>

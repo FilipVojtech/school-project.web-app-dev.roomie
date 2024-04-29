@@ -1,11 +1,5 @@
 import { auth } from "./auth";
 
-export const config = {
-    matcher: [
-        '/((?!api|_next/static|_next/image|.*\\.png$).*)',
-    ],
-};
-
 export default auth(({ auth, nextUrl }): void | Response | Promise<void | Response> => {
     const restrictedPages = [ "/fridge", "/notes", "/calendar", "/account", "/household", "/create-household" ];
     const isLoggedIn = !!auth?.user;
@@ -57,3 +51,9 @@ export default auth(({ auth, nextUrl }): void | Response | Promise<void | Respon
     }
     return;
 })
+
+export const config = {
+    matcher: [
+        '/((?!api|_next/static|_next/image|.*\\.png$).*)',
+    ],
+};

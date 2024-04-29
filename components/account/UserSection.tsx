@@ -1,13 +1,9 @@
+"use client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import shajs from 'sha.js';
 
-export default function UserSection() {
-    // TODO: Data of the actual user
-    const { email, name, initials } = {
-        email: "filip.vojtech@outlook.com",
-        name: "Test Debugger",
-        initials: "FV",
-    };
+export default function UserSection({email, initials, name}:{email: string, initials: string, name: string}) {
     const hash = shajs("SHA256")
         .update(email.trim().toLowerCase())
         .digest("hex");
