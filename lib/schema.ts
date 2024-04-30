@@ -102,3 +102,8 @@ export const EventFormSchema = z
         repeating: z.boolean().optional(),
         frequency: z.string().optional(),
     });
+
+export const ChangeHouseHoldNameFormSchema = z
+    .object({
+        name: z.string().min(1, "Name is required").max(128, "Maximum length is 128"),
+    })
