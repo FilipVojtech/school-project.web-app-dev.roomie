@@ -1,7 +1,12 @@
 "use server";
 
 import { z } from "zod";
-import { ChangeEmailFormSchema, ChangeNameFormSchema, ChangePasswordFormSchema } from "@/lib/schema";
+import {
+    ChangeEmailFormSchema,
+    ChangeHouseHoldNameFormSchema,
+    ChangeNameFormSchema,
+    ChangePasswordFormSchema
+} from "@/lib/schema";
 import { sql } from "@vercel/postgres";
 import { auth, signOut } from "@/auth";
 import { User } from "@/lib/definitions";
@@ -129,7 +134,7 @@ export async function leaveHousehold() {
     try {
         await sql`
             UPDATE users
-            SET (household_id, role) = (null, null)
+            SET (household_id, role) = (NULL, NULL)
             WHERE id = ${ session.user.id };
         `;
 
@@ -141,4 +146,46 @@ export async function leaveHousehold() {
     }
 
     return { success: true, message: "Successfully left the household.", redirect: "/" };
+}
+
+export async function changeHouseholdName(data: z.infer<typeof ChangeHouseHoldNameFormSchema>) {
+    const fail = { success: false, message: "Couldn't change household name" };
+    const session = await auth();
+
+    if (!session?.user) return fail;
+
+    const parsedData = ChangeHouseHoldNameFormSchema.safeParse(data);
+    if (!parsedData.success) return fail;
+    const { name } = parsedData.data;
+
+    try {
+        await sql`
+            UPDATE household
+            SET name=${ name }
+            WHERE id = ${ session.user.householdId };
+        `;
+    } catch {
+        console.error("Couldn't change household name", session.user.householdId);
+        return fail;
+    }
+
+    return { success: true, message: "Household name changed successfully" };
+}
+
+export async function fetchHouseholdName() {
+    const session = await auth();
+    if (!session?.user) return null;
+
+    try {
+        const result = await sql<{ name: string }>`
+            SELECT name
+            FROM household
+            WHERE id = ${ session.user.householdId };
+        `;
+
+        return result.rows[0].name;
+    } catch {
+        console.error("Couldn't change household name", session.user.householdId);
+        return null;
+    }
 }
