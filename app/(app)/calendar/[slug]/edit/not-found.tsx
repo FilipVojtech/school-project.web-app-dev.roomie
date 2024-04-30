@@ -1,22 +1,22 @@
-import Header from "@/components/Header";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import React from "react";
-import { headers } from "next/headers";
 import { Metadata } from "next";
+import { headers } from "next/headers";
+import Header from "@/components/Header";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import React from "react";
 
 export const metadata: Metadata = {
     title: "Note not found",
 }
 
-export default async function NoteNotFound() {
+export default async function EventNotFound() {
     const headersList = headers();
     // const domain = headersList.get('host') || "";
     const fullUrl = headersList.get('referer') || "";
     const pathSegments = fullUrl.split("/");
 
     return <>
-        <Header title="Note not found"/>
+        <Header title="Event not found"/>
         <main className="flex flex-col gap-4">
             { pathSegments.length > 2 &&
                 <div className="w-full bg-foreground">
@@ -34,7 +34,7 @@ export default async function NoteNotFound() {
             </div>
             <div>
                 <Button asChild>
-                    <Link href="/notes">Go back to notes</Link>
+                    <Link href="/calendar">Go back to calendar</Link>
                 </Button>
             </div>
         </main>

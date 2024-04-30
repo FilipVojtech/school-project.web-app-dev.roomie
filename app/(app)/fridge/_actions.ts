@@ -79,7 +79,7 @@ export async function addFridgeItem(data: z.infer<typeof FridgeItemFormSchema>) 
     }
 
     revalidatePath("/fridge");
-    return { success: true, message: "Item created successfully" };
+    return { success: true, message: "Item created" };
 }
 
 export async function fetchUserFridgeItems() {
@@ -170,7 +170,7 @@ export async function deleteFridgeItem(id: string) {
     }
 
     revalidatePath("/fridge");
-    return { success: true, message: "Item deleted successfully", redirectTo: "/fridge" };
+    return { success: true, message: "Item deleted", redirectTo: "/fridge" };
 }
 
 export async function updateFridgeItem(id: string, data: z.infer<typeof FridgeItemFormSchema>) {
@@ -215,5 +215,5 @@ export async function updateFridgeItem(id: string, data: z.infer<typeof FridgeIt
     }
 
     revalidatePath("/fridge");
-    return { success: true, message: "Item updated successfully" };
+    return { success: true, message: "Item updated" };
 }

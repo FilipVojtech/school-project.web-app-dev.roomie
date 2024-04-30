@@ -1,20 +1,30 @@
 "use client";
 
-import React from "react";
+import React, { EventHandler, useState } from "react";
 import type { SetStateAction } from 'react';
-import { CaptionProps, DayPicker, useNavigation } from "react-day-picker";
-import { format } from "date-fns";
+import { CaptionProps, DayClickEventHandler, DayPicker, useNavigation } from "react-day-picker";
+import { format, formatISO, parseISO } from "date-fns";
 import "react-day-picker/dist/style.css";
 import "@/styles/dayCalendar.css"
 import { CalendarFold, ChevronLeft, ChevronRight } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
 
-export default function DatePicker({ date, setDate }: { date: Date, setDate: React.Dispatch<SetStateAction<Date>> }) {
+export default function DatePicker() {
+    const router = useRouter();
+    const segments = usePathname().split("/");
+    const [ date, setDate ] = useState<Date>(parseISO(segments[segments.length - 1]));
+
+    function onSelect(date: Date) {
+        setDate(date);
+        router.replace(`/calendar/${ formatISO(date, { representation: "date" }) }`);
+    }
+
     return <div className="mb-[5px] md:mb-0 md:mr-[10px] contents md:block">
         <DayPicker
             mode="single"
             selected={ date }
             // @ts-ignore
-            onSelect={ setDate }
+            onSelect={ (date) => onSelect(date) }
             showOutsideDays={ true }
             weekStartsOn={ 1 }
             components={ { Caption: CustomCaption } }

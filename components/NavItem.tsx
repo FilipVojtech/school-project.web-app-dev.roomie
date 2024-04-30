@@ -26,7 +26,7 @@ export default function NavItem(
                 className={ clsx(
                     "flex flex-auto basis-1/3 flex-col items-center bg-[#b9f2ba] p-2 rounded-md md:flex-row md:gap-3 md:text-lg md:flex-[0_0_auto] md:p-3 interactive",
                     {
-                        "text-blue-600 font-medium": pathName == href,
+                        "text-blue-600 font-medium": pathName.startsWith(href),
                     }
                 ) }
                 href={ href }
