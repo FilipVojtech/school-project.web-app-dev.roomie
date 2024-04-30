@@ -2,7 +2,7 @@
 
 import { auth, signIn, signOut } from "@/auth";
 import { AuthError } from "next-auth";
-import { sql } from "@vercel/postgres";
+import { createClient, sql } from "@vercel/postgres";
 import { z } from "zod";
 import { User } from "@/lib/definitions";
 import {
@@ -91,12 +91,12 @@ export async function register(data: z.infer<typeof RegisterFormSchema>) {
         if (!!birthDate) {
             await sql`
                 INSERT INTO users (first_name, last_name, email, password, birth_date)
-                values (${ firstName }, ${ lastName }, ${ email }, ${ password }, ${ birthDate.toDateString() });
+                VALUES (${ firstName }, ${ lastName }, ${ email }, ${ password }, ${ birthDate.toDateString() });
             `;
         } else {
             await sql`
                 INSERT INTO users (first_name, last_name, email, password)
-                values (${ firstName }, ${ lastName }, ${ email }, ${ password });
+                VALUES (${ firstName }, ${ lastName }, ${ email }, ${ password });
             `;
         }
     } catch (error) {
@@ -112,37 +112,42 @@ export async function register(data: z.infer<typeof RegisterFormSchema>) {
 }
 
 export async function createHousehold(data: z.infer<typeof CreateHouseholdFormSchema>) {
+    const fail = { success: false, message: "There was an issue creating the household" };
     const session = await auth();
     if (!session?.user) {
-        return { success: false, message: "There was an issue creating the household" };
+        return fail;
     }
 
     const parseResult = CreateHouseholdFormSchema.safeParse(data);
 
-    if (!parseResult.success) {
-        return { success: false, error: parseResult.error.format() };
-    }
+    if (!parseResult.success) return { success: false, error: parseResult.error.format() };
 
     const { householdName } = parseResult.data;
 
+    const client = createClient();
+    await client.connect();
     try {
-        const createHouseholdResult = await sql`
+        const createHouseholdResult = await client.sql`
             INSERT INTO household(name)
             VALUES (${ householdName })
             RETURNING id;
         `;
         const newHouseholdId = createHouseholdResult.rows[0].id;
 
-        await sql`
+        await client.sql`
             UPDATE users
-            SET household_id=${ newHouseholdId }
+            SET household_id=${ newHouseholdId },
+                role='admin'
             WHERE id = ${ session.user.id };
         `;
 
-        session.user.householdId = householdName;
+        session.user.householdId = newHouseholdId;
+        session.user.role = "admin";
     } catch (error) {
         console.error("Error creating household.", error);
-        return { success: false, message: "There was an issue creating the household", }
+        return fail;
+    } finally {
+        await client.end();
     }
 
     return { success: true, redirect: "/fridge", }
