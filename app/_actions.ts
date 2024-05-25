@@ -11,6 +11,7 @@ import {
     RegisterFormSchema
 } from "@/lib/schema";
 import bcrypt from "bcryptjs";
+import CreateHouseholdForm from "@/app/(landing)/create-household/CreateHouseholdForm";
 
 const pepper = process.env.PEPPER!;
 
@@ -121,7 +122,9 @@ export async function register(data: z.infer<typeof RegisterFormSchema>) {
     };
 }
 
-export async function createHousehold(data: z.infer<typeof CreateHouseholdFormSchema>) {
+export async function createHousehold(data: z.infer<typeof CreateHouseholdFormSchema>): Promise<
+    { success: boolean, message?: string, error?: any, redirect?: string }
+> {
     const fail = { success: false, message: "There was an issue creating the household" };
     const session = await auth();
     if (!session?.user) {
@@ -130,7 +133,7 @@ export async function createHousehold(data: z.infer<typeof CreateHouseholdFormSc
 
     const parseResult = CreateHouseholdFormSchema.safeParse(data);
 
-    if (!parseResult.success) return { success: false, error: parseResult.error.format() };
+    if (!parseResult.success) return { ...fail, error: parseResult.error.format() };
 
     const { householdName } = parseResult.data;
 
