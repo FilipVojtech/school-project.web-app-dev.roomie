@@ -8,11 +8,13 @@ import {
 import NavItem from "@/components/NavItem";
 import Image from "next/image";
 import { auth } from "@/auth";
+import { formatISO } from "date-fns";
 
 export default async function Navigation() {
     const session = await auth();
     if (!session?.user) return <p>Error occurred</p>
-    const username = `${session.user.firstName} ${session.user.lastName}`;
+    const username = `${ session.user.firstName } ${ session.user.lastName }`;
+    const todayISOString = formatISO(new Date(), { representation: "date" });
 
     return <nav
         className="flex justify-between gap-2 align-middle mt-[5px] md:mr-[10px] md:top-2.5 bottom-[5px] md:bottom-[unset] z-40 sticky md:-order-1 md:mt-0 md:h-[calc(100dvh-20px)] md:flex-col md:justify-start md:gap-2"
@@ -24,7 +26,9 @@ export default async function Navigation() {
         </div>
         <NavItem href="/fridge" icon={ <Refrigerator/> }>Fridge</NavItem>
         <NavItem href="/notes" icon={ <Sticker/> }>Notes</NavItem>
-        <NavItem href="/calendar" icon={ <Calendar/> }>Calendar</NavItem>
+        <NavItem href={ `/calendar/${ todayISOString }` } icon={ <Calendar/> }>
+            Calendar
+        </NavItem>
         {/*Spacer*/ }
         <div className="hidden bg-[#b9f2ba] w-full rounded-md md:block md:flex-grow"></div>
         <div className="hidden md:contents">

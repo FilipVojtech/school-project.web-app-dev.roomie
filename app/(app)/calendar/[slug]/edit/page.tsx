@@ -1,8 +1,11 @@
 import Header from "@/components/Header";
-import AddEventForm from "@/components/calendar/AddEventForm";
 import { fetchEvent, getFrequencyOptions } from "@/app/(app)/calendar/_actions";
 import EditEventForm from "@/components/calendar/EditEventForm";
 import { notFound } from "next/navigation";
+
+export const metadata = {
+    title: "Edit event",
+}
 
 export default async function EditEventPage({ params }: { params: { slug: string } }) {
     const data = await fetchEvent(params.slug);

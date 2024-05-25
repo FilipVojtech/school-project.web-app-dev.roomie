@@ -9,6 +9,10 @@ import type { CalendarItem as CalendarItemType } from "@/lib/definitions";
 import { fetchEvents } from "@/app/(app)/calendar/_actions";
 import Header from "@/components/Header";
 
+export const metadata = {
+    title: "Calendar",
+}
+
 export default async function CalendarPage({ params }: { params: { slug: string } }) {
     const date = parseISO(params.slug);
     const data: CalendarItemType[] = await fetchEvents(date);
