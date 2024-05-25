@@ -21,7 +21,7 @@ export default async function EventNotFound() {
             { pathSegments.length > 2 &&
                 <div className="w-full bg-foreground">
                     <code className="p-5 border-2 rounded-md block w-full">
-                        Note ID: { pathSegments[pathSegments.length - 2] }
+                        Event ID: { pathSegments[pathSegments.length - 2] }
                     </code>
                 </div>
             }

@@ -66,21 +66,29 @@ export async function register(data: z.infer<typeof RegisterFormSchema>) {
 
     let { email, password, firstName, lastName, birthDate, } = parseResult.data;
 
+    const client = createClient();
+    await client.connect();
     // Check user does not exist
     let user;
     try {
-        user = await sql<User>`
+        user = await client.sql<User>`
             SELECT *
             FROM users
             WHERE email = ${ email };
         `;
     } catch (error) {
         console.error("SQL Error while creating user", error);
+        await client.end();
+        return { success: false, message: "Failed to register" };
     }
+
     if (user && user.rowCount > 0) {
-        return {
-            success: false,
-            message: "User with that email address already exists.",
+        const existingUser = user.rows[0];
+        if (!(existingUser.first_name == firstName && existingUser.last_name == lastName && existingUser.email == email)) {
+            return {
+                success: false,
+                message: "User with that email address already exists.",
+            };
         }
     }
 
@@ -89,12 +97,12 @@ export async function register(data: z.infer<typeof RegisterFormSchema>) {
 
     try {
         if (!!birthDate) {
-            await sql`
+            await client.sql`
                 INSERT INTO users (first_name, last_name, email, password, birth_date)
                 VALUES (${ firstName }, ${ lastName }, ${ email }, ${ password }, ${ birthDate.toDateString() });
             `;
         } else {
-            await sql`
+            await client.sql`
                 INSERT INTO users (first_name, last_name, email, password)
                 VALUES (${ firstName }, ${ lastName }, ${ email }, ${ password });
             `;
@@ -102,6 +110,8 @@ export async function register(data: z.infer<typeof RegisterFormSchema>) {
     } catch (error) {
         console.error("Error creating user", error);
         throw new Error("Failed to register");
+    } finally {
+        await client.end();
     }
 
     return {

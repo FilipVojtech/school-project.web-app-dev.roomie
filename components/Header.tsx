@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import UserImage from "@/app/(app)/UserImage";
+import UserImage from "@/components/UserImage";
 import Link from "next/link";
 import { clsx } from "clsx";
 import { usePathname } from "next/navigation";

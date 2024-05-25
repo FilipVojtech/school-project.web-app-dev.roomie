@@ -95,7 +95,7 @@ export async function fetchUserFridgeItems() {
                    name,
                    quantity,
                    expiry_date,
-                   (SELECT concat(u.first_name, ' ', u.last_name) FROM users u WHERE u.id = id) AS owners
+                   (SELECT concat(u.first_name, ' ', u.last_name) FROM users u WHERE u.id = id LIMIT 1) AS owners
             FROM fridge_items
                      JOIN fridge_items_owners fio ON fridge_items.id = fio.item_id
             WHERE fio.owner_id = ${ session.user.id };
@@ -123,7 +123,7 @@ export async function fetchFridgeItem(id: string): Promise<FridgeItem | null> {
                    name,
                    quantity,
                    expiry_date,
-                   (SELECT concat(u.first_name, ' ', u.last_name) FROM users u WHERE u.id = id) AS owners
+                   (SELECT concat(u.first_name, ' ', u.last_name) FROM users u WHERE u.id = id LIMIT 1) AS owners
             FROM fridge_items
             WHERE id = ${ id };
         `;

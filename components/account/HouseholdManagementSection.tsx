@@ -9,7 +9,7 @@ export default async function HouseholdManagementSection() {
 
     return <SettingsSection title="Household Management">
         <ChangeHouseHoldNameOption name={householdName}/>
-        <SettingsItem title="Members" icon={ <Users/> }/>
+        <SettingsItem title="Members" href="/household/members" icon={ <Users/> }/>
         <SettingsItem title="Transfer ownership" icon={ <ArrowLeftRight/> } hidden/>
         <SettingsItem title="Disband household" icon={ <XOctagon/> } destructive/>
     </SettingsSection>;

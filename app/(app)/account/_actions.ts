@@ -154,6 +154,11 @@ export async function changeHouseholdName(data: z.infer<typeof ChangeHouseHoldNa
 
     if (!session?.user) return fail;
 
+    if (session.user.role !== "admin") return {
+        success: false,
+        message: "You do not have permission to change the household name"
+    };
+
     const parsedData = ChangeHouseHoldNameFormSchema.safeParse(data);
     if (!parsedData.success) return fail;
     const { name } = parsedData.data;

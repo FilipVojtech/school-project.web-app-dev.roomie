@@ -107,3 +107,10 @@ export const ChangeHouseHoldNameFormSchema = z
     .object({
         name: z.string().min(1, "Name is required").max(128, "Maximum length is 128"),
     })
+
+export const InviteUserFormSchema = z
+    .object({
+        firstName: z.string().min(1, "First name is required").max(64, "Maximum length is 64"),
+        lastName: z.string().min(1, "Last name is required").max(64, "Maximum length is 64"),
+        email: z.string().email("Please enter a valid email address")
+    })

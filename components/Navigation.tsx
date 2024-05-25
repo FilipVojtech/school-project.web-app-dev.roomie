@@ -7,10 +7,12 @@ import {
 } from 'lucide-react';
 import NavItem from "@/components/NavItem";
 import Image from "next/image";
+import { auth } from "@/auth";
 
-export default function Navigation() {
-    // TODO: Remove when authentication implemented
-    let username = "Test Debuger"
+export default async function Navigation() {
+    const session = await auth();
+    if (!session?.user) return <p>Error occurred</p>
+    const username = `${session.user.firstName} ${session.user.lastName}`;
 
     return <nav
         className="flex justify-between gap-2 align-middle mt-[5px] md:mr-[10px] md:top-2.5 bottom-[5px] md:bottom-[unset] z-40 sticky md:-order-1 md:mt-0 md:h-[calc(100dvh-20px)] md:flex-col md:justify-start md:gap-2"
