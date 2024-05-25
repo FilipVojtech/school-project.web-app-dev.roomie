@@ -26,7 +26,7 @@ export default function CreateHouseholdForm() {
         const result = await createHousehold(values);
 
         if (result.success) {
-            router.replace(result.redirect!);
+            if (result.redirect) router.replace(result.redirect);
         } else {
             toast.error(result.message);
         }
