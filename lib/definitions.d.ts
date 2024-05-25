@@ -37,3 +37,13 @@ export type NoteItem = {
     content: string;
     pinned: boolean;
 }
+
+export type CalendarItem = {
+    id: string;
+    title: string;
+    author_id: string;
+    household_id: string;
+    repeating: boolean;
+    frequency: any;
+    starts_on: Date;
+}

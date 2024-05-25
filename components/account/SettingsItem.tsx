@@ -2,18 +2,25 @@
 
 import React, { ReactNode } from "react";
 import { clsx } from "clsx";
+import { useRouter } from "next/navigation";
 
-export default function SettingsItem({ children, title, icon, onClick, hidden, destructive }: {
+interface SettingsItemProps {
     children?: ReactNode,
     title: string,
     icon?: React.JSX.Element,
     onClick?: () => void,
     hidden?: boolean,
-    destructive?: boolean
-}) {
+    destructive?: boolean,
+    href?: string
+}
+
+export default function SettingsItem({ children, title, icon, onClick, hidden, destructive, href }: SettingsItemProps) {
+    const router = useRouter();
     if (hidden) {
         return null;
     }
+
+    if (onClick == undefined && !!href) onClick = () => router.push(href);
 
     return <div
         className={ clsx("flex items-center justify-between h-min rounded-md bg-white p-2 gap-1.5 select-none cursor-pointer interactive", { "destructive": destructive }) }

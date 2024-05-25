@@ -19,7 +19,7 @@ export default async function Account() {
     }
 
     const { name, initials, email } = session.user;
-
+    console.log(session.user);
     return <>
         <Header title="Account"/>
         <main className="md:w-1/2 md:mx-auto">
@@ -27,7 +27,7 @@ export default async function Account() {
             <div className="flex flex-col gap-4 bg-foreground p-2.5 mt-10 rounded-lg">
                 <GeneralSection/>
                 <AccountSection/>
-                <HouseholdManagementSection/>
+                { session.user.role == "admin" && <HouseholdManagementSection/> }
                 <LegalSection/>
                 <LogoutButton/>
             </div>

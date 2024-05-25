@@ -79,7 +79,7 @@ export async function addFridgeItem(data: z.infer<typeof FridgeItemFormSchema>) 
     }
 
     revalidatePath("/fridge");
-    return { success: true, message: "Item created successfully" };
+    return { success: true, message: "Item created" };
 }
 
 export async function fetchUserFridgeItems() {
@@ -95,7 +95,7 @@ export async function fetchUserFridgeItems() {
                    name,
                    quantity,
                    expiry_date,
-                   (SELECT concat(u.first_name, ' ', u.last_name) FROM users u WHERE u.id = id) AS owners
+                   (SELECT concat(u.first_name, ' ', u.last_name) FROM users u WHERE u.id = id LIMIT 1) AS owners
             FROM fridge_items
                      JOIN fridge_items_owners fio ON fridge_items.id = fio.item_id
             WHERE fio.owner_id = ${ session.user.id };
@@ -123,7 +123,7 @@ export async function fetchFridgeItem(id: string): Promise<FridgeItem | null> {
                    name,
                    quantity,
                    expiry_date,
-                   (SELECT concat(u.first_name, ' ', u.last_name) FROM users u WHERE u.id = id) AS owners
+                   (SELECT concat(u.first_name, ' ', u.last_name) FROM users u WHERE u.id = id LIMIT 1) AS owners
             FROM fridge_items
             WHERE id = ${ id };
         `;
@@ -170,7 +170,7 @@ export async function deleteFridgeItem(id: string) {
     }
 
     revalidatePath("/fridge");
-    return { success: true, message: "Item deleted successfully", redirectTo: "/fridge" };
+    return { success: true, message: "Item deleted", redirectTo: "/fridge" };
 }
 
 export async function updateFridgeItem(id: string, data: z.infer<typeof FridgeItemFormSchema>) {
@@ -215,5 +215,5 @@ export async function updateFridgeItem(id: string, data: z.infer<typeof FridgeIt
     }
 
     revalidatePath("/fridge");
-    return { success: true, message: "Item updated successfully" };
+    return { success: true, message: "Item updated" };
 }

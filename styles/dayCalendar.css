@@ -1,13 +1,3 @@
-.rdp {
-    margin: 0;
-
-    position: sticky;
-    top: 0;
-    background-color: white;
-    /*border-radius: 10px;*/
-    @apply rounded-b-md;
-}
-
 .rdp-months {
     justify-content: center;
 }
